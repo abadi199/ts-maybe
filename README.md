@@ -1,44 +1,27 @@
-# RemoteData for TypeScript
-Inspired by Kris Jenkin's Elm RemoteData package and his blog post:
-http://blog.jenkster.com/2016/06/how-elm-slays-a-ui-antipattern.html
+# Maybe for TypeScript
+Inspired `Maybe` in [Elm](http://elm-lang.org)
 
 ## Example
 ```ts
-function renderFruits(RemoteData<string[], string> fruits) {
-    switch (fruits.kind) {
-      case RemoteDataKind.Loading:
-        renderLoading();
+function logText(Maybe<string> text) {
+    switch (text.kind) {
+      case MaybeKind.Nothing:
         break;
-      case RemoteDataKind.Error:
-        renderError(fruits.error);
-        break;
-      case RemoteDataKind.ErrorWithData:
-        renderErrorWithData(fruits.value, fruits.error);
-        break;
-      case RemoteDataKind.NotAsked:
-        clear();
-        break;
-      case RemoteDataKind.Reloading:
-        renderReloading(fruits.value);
-        break;
-      case RemoteDataKind.Success:
-        renderSuccess(fruits.value);
+      case MaybeKind.Just:
+        console.log(text.value);
         break;
     }
 } 
 
 function main() {
-    renderFruits(success(["Apple", "Orange", "Mango"])); // Success
-    renderFruits(loading()); // Loading
-    renderFruits(error("Error loading fruits")); // Error
-    renderFruits(loading(success(["Apple", "Orange", "Mango"])); // Reloading
-    renderFruits(error("", success(["Apple", "Orange", "Mango"]))); // ErrorWithData
+    logText(nothing()); // no log message
+    logText(just("Hello World")); // "Hello World"
 }
 ```
 
 ## Install
 ```
-npm install -S @abadi199/remotedata
+npm install -S @abadi199/maybe
 ```
 
 ## Contributing
