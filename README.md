@@ -1,5 +1,5 @@
 # Maybe for TypeScript
-Inspired `Maybe` in [Elm](http://elm-lang.org)
+Inspired by `Maybe` in [Elm](http://elm-lang.org)
 
 ## Example
 ```ts
