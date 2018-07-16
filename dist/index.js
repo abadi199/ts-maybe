@@ -21,6 +21,9 @@ var Nothing = /** @class */ (function () {
     Nothing.prototype.andThen = function (_f) {
         return new Nothing();
     };
+    Nothing.prototype.withDefault = function (payload) {
+        return payload;
+    };
     return Nothing;
 }());
 exports.Nothing = Nothing;
@@ -44,6 +47,9 @@ var Just = /** @class */ (function () {
     };
     Just.prototype.andThen = function (f) {
         return f(this.value);
+    };
+    Just.prototype.withDefault = function (_payload) {
+        return this.value;
     };
     return Just;
 }());
