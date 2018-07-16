@@ -1,14 +1,14 @@
 export enum MaybeKind {
   Nothing = 1,
-  Just = 2,
+  Just = 2
 }
 
 export interface IMaybe<data> {
   kind: MaybeKind;
   isNothing(): boolean;
   isJust(): boolean;
-  map<b>(f: (payload: data) => b) : Maybe<b>;
-  andThen<b>(f: (payload: data) => Maybe<b>) : Maybe<b>;
+  map<b>(f: (payload: data) => b): Maybe<b>;
+  andThen<b>(f: (payload: data) => Maybe<b>): Maybe<b>;
   withDefault(payload: data): data;
 }
 
@@ -17,13 +17,13 @@ export class Nothing<data> implements IMaybe<data> {
   isNothing() {
     return true;
   }
-  isJust() {  
+  isJust() {
     return !this.isNothing();
   }
   map<b>(_f: (payload: data) => b): Maybe<b> {
     return new Nothing<b>();
   }
-  andThen<b>(_f: (payload: data) => Maybe<b>) : Maybe<b> {
+  andThen<b>(_f: (payload: data) => Maybe<b>): Maybe<b> {
     return new Nothing<b>();
   }
   withDefault(payload: data): data {
@@ -60,6 +60,4 @@ export function just<data>(value: data): Maybe<data> {
   return new Just(value);
 }
 
-export type Maybe<data> =
-  | Nothing<data>
-  | Just<data>
+export type Maybe<data> = Nothing<data> | Just<data>;
