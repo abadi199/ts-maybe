@@ -85,5 +85,10 @@ describe("Maybe", () => {
       const output = maybe.withDefault(defaultData);
       expect(output).toEqual(data);
     });
+
+    it("should be nothing given a null", () => {
+      const maybe = just(null);
+      expect(maybe.isNothing()).toBeTruthy();
+    });
   });
 });

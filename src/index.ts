@@ -57,7 +57,7 @@ export class Just<data> implements IMaybe<data> {
 }
 
 export function just<data>(value: data): Maybe<data> {
-  return new Just(value);
+  return value ? new Just(value) : nothing();
 }
 
 export type Maybe<data> = Nothing<data> | Just<data>;
