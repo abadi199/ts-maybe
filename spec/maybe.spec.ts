@@ -1,4 +1,4 @@
-import { nothing, MaybeKind, just } from "../src/index";
+import { nothing, MaybeKind, just, maybe } from "../src/index";
 
 describe("Maybe", () => {
   describe("nothing", () => {
@@ -33,6 +33,14 @@ describe("Maybe", () => {
       const maybe = nothing();
       const output = maybe.withDefault(defaultData);
       expect(output).toEqual(defaultData);
+    });
+
+    it("should not do side effect", () => {
+      const value = { counter: 0 };
+      nothing().do(_ => {
+        value.counter = value.counter + 1;
+      });
+      expect(value.counter).toEqual(0);
     });
   });
 
@@ -89,6 +97,33 @@ describe("Maybe", () => {
     it("should be nothing given a null", () => {
       const maybe = just(null);
       expect(maybe.isNothing()).toBeTruthy();
+    });
+
+    it("should do side effect", () => {
+      const value = { counter: 0 };
+      just("Something").do(_ => {
+        value.counter = value.counter + 1;
+      });
+      expect(value.counter).toEqual(1);
+    });
+  });
+
+  describe("maybe", () => {
+    it("should return nothing given a null", () => {
+      expect(maybe(null).isNothing()).toBeTruthy();
+    });
+
+    it("should return just given a value", () => {
+      expect(maybe("Something").isJust()).toBeTruthy();
+    });
+
+    it("should be able to access .value after doing isJust checking", () => {
+      const maybe = just(1);
+      if (maybe.isJust()) {
+        expect(maybe.value).toEqual(1);
+      } else {
+        fail("Should not be here");
+      }
     });
   });
 });

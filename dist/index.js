@@ -24,6 +24,9 @@ var Nothing = /** @class */ (function () {
     Nothing.prototype.withDefault = function (payload) {
         return payload;
     };
+    Nothing.prototype.do = function (_f) {
+        return this;
+    };
     return Nothing;
 }());
 exports.Nothing = Nothing;
@@ -51,10 +54,20 @@ var Just = /** @class */ (function () {
     Just.prototype.withDefault = function (_payload) {
         return this.value;
     };
+    Just.prototype.do = function (f) {
+        if (this.value) {
+            f(this.value);
+        }
+        return this;
+    };
     return Just;
 }());
 exports.Just = Just;
 function just(value) {
-    return new Just(value);
+    return value ? new Just(value) : nothing();
 }
 exports.just = just;
+function maybe(value) {
+    return just(value);
+}
+exports.maybe = maybe;
